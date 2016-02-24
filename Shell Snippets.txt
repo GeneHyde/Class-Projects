@@ -1,0 +1,78 @@
+Due to the fact that this is a required assignment in the OS class I woundn't want people copying my
+code and submiting it in their name so the whole thing is going to be just parts of the code I wrote 
+for this asssignment.
+
+Here is the primary .h file
+
+#ifndef COMMANDS_H_INCLUDED
+#define COMMANDS_H_INCLUDED
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include "utility.h"
+
+void run(char ** argv, int);
+char ** parsePre(char * s, int * count);
+char ** parsePost(char * s, int * count);
+void pipeIt(char ** prePipe, int preCount, char ** postPipe, int postCount);
+void reDirIn(char ** prePipe, int preCount, char ** postPipe, int postCount);
+void reDirOut(char ** prePipe, int preCount, char ** postPipe, int postCount);
+void runHistory(LinkedList * history, char ** argv);
+char * returnCommand(void * in);
+char ** checkAlias(LinkedList * alias, char ** argv, int * argc2);
+
+#endif // COMMANDS_H_INCLUDED
+
+
+The basic fork
+    int status;
+    pid_t pid = fork();
+    if(pid != 0)
+    {
+        waitpid(pid, &status, 0);
+    }
+    else
+    {
+        execvp(argv[0], argv);
+        clean(argc, argv);
+        printf("Failed command\n");
+        exit(0);
+    }
+
+To fire up the last command (! in the termanl) in the runHistory
+if(argv[0][1] == '!')
+    {
+        temp = returnCommand(history->tail->data);
+        newargs = makeargs(temp, &argc);
+        run(newargs, argc);
+    }
+
+Half of the Pipe in the PipeIt
+        if(pid2 == 0)
+        {
+            close(fd[0]);
+            close(1);
+            dup(fd[1]);
+            close(fd[1]);
+            execvp(prePipe[0], prePipe);
+            clean(preCount, prePipe);
+            exit(0);
+        }
+        
+Part of writeing out to a file
+  close(1);
+  dup(fileno(fin));
+  fclose(fin);
+  execvp(argv[0], argv);
+  clean(argc, argv);
+  printf("Failed command\n");
+  exit(0);
+
+
+Hopefuly this is enough to illustrate that I was able to write a shell properly, and also vauge enough that someone
+who doesn't understand this stuff not to be able to cheat off it.
+

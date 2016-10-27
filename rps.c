@@ -1,3 +1,6 @@
+// This is the client for the Rock Paper Sissors network game I made in my Networks class
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>

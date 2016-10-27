@@ -1,3 +1,9 @@
+/* This is the server for the Rock Paper Scisors game I made in my Networks class
+ * I know now that you shouldn't use mutiple select statements but at the time the way
+ * the proffessor went over them was extreamly unclear and unhelpful so it was too late for me
+ * to be able to do much about it
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
